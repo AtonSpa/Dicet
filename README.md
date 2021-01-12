@@ -6,9 +6,9 @@ The string to be evaluated is something like `$a == "foo" + "bar"`; it may or ma
 
 Expressions can also be pre-compiled to speed up the evaluation.
 
-The library is small, [very fast](https://github.com/proofrock/Dicet/wiki/Benchmarks), and doesn't have external dependencies other than JVM (8+). There are 35+ built-in functions, and it's quite easy to hack it to add more.
+The library is small, [very fast](https://github.com/AtonSpa/Dicet/wiki/Benchmarks), and doesn't have external dependencies other than JVM (8+). There are 35+ built-in functions, and it's quite easy to hack it to add more.
 
-[**Documentation is in the Wiki.**](https://github.com/proofrock/Dicet/wiki)
+[**Documentation is in the Wiki.**](https://github.com/AtonSpa/Dicet/wiki)
 
 Example of usage:
 
