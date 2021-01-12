@@ -29,24 +29,28 @@ import com.aton.proj.libs.dicet.internals.Function;
 import com.aton.proj.libs.dicet.internals.Operand;
 import com.aton.proj.libs.dicet.internals.ValuedItem;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.math.BigDecimal;
 
-public class EpochToStr implements Function.Performable {
+public class IndexOf implements Function.Performable {
     @Override
     public Operand perform(Operand... operands) throws EvalException {
         if (operands.length != 2)
-            throw new EvalException("Operands for EPOCHTOSTR must be 2, are " + operands.length);
+            throw new EvalException("Operands for INDEXOF must be 2, are " + operands.length);
         Operand o1 = operands[0];
         Operand o2 = operands[1];
 
-        if (o1.getType() != ValuedItem.Type.NUM || o2.getType() != ValuedItem.Type.STRING)
-            throw new EvalException("Operands for EPOCHTOSTR must be Num and String");
+        if (!(o1.getType() == ValuedItem.Type.STRING || o1.getType() == ValuedItem.Type.NULL)
+                || o2.getType() != ValuedItem.Type.STRING)
+            throw new EvalException("Operands for INDEXOF must be [String|Null] and String");
 
-        long v1 = o1.coalesceToLong("Second argument for EPOCHTOSTR must be an integer") * 1000;
+        if (o1.getType() == ValuedItem.Type.NULL)
+            return Operand.numOperand(new BigDecimal(-1));
+
+        assert o1.getValue() != null;
+        String v1 = (String) o1.getValue();
         assert o2.getValue() != null;
         String v2 = (String) o2.getValue();
 
-        return Operand.strOperand(new SimpleDateFormat(v2).format(new Date(v1)));
+        return Operand.numOperand(new BigDecimal(v1.indexOf(v2)));
     }
 }

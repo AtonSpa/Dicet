@@ -40,9 +40,11 @@ public class And implements Function.Performable {
         if (o1.getType() != ValuedItem.Type.BOOL || o2.getType() != ValuedItem.Type.BOOL)
             throw new EvalException("Operands for AND must be Boolean");
 
-        boolean v1 = ((Boolean) o1.getValue()).booleanValue();
-        boolean v2 = ((Boolean) o2.getValue()).booleanValue();
+        assert o1.getValue() != null;
+        Boolean v1 = (Boolean) o1.getValue();
+        assert o2.getValue() != null;
+        Boolean v2 = (Boolean) o2.getValue();
 
-        return Operand.boolOperand(v1 && v2);
+        return Operand.boolOperand(v1.booleanValue() && v2.booleanValue());
     }
 }

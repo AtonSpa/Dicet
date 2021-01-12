@@ -44,7 +44,9 @@ public class StrToEpoch implements Function.Performable {
         if (o1.getType() != ValuedItem.Type.STRING || o2.getType() != ValuedItem.Type.STRING)
             throw new EvalException("Operands for STRTOEPOCH must be String and String");
 
+        assert o1.getValue() != null;
         String v1 = (String) o1.getValue();
+        assert o2.getValue() != null;
         String v2 = (String) o2.getValue();
 
         try {

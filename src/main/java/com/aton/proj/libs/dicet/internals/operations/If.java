@@ -41,6 +41,8 @@ public class If implements Function.Performable {
         if (o1.getType() != ValuedItem.Type.BOOL)
             throw new EvalException("First operand for IF must be BOOL");
 
-        return ((Boolean) o1.getValue()).booleanValue() ? o2 : o3;
+        assert o1.getValue() != null;
+        Boolean v1 = (Boolean) o1.getValue();
+        return v1.booleanValue() ? o2 : o3;
     }
 }

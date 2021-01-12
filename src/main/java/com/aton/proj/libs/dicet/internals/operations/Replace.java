@@ -29,24 +29,30 @@ import com.aton.proj.libs.dicet.internals.Function;
 import com.aton.proj.libs.dicet.internals.Operand;
 import com.aton.proj.libs.dicet.internals.ValuedItem;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-public class EpochToStr implements Function.Performable {
+public class Replace implements Function.Performable {
     @Override
     public Operand perform(Operand... operands) throws EvalException {
-        if (operands.length != 2)
-            throw new EvalException("Operands for EPOCHTOSTR must be 2, are " + operands.length);
+        if (operands.length != 3)
+            throw new EvalException("Operands for REPLACE must be 3, are " + operands.length);
         Operand o1 = operands[0];
         Operand o2 = operands[1];
+        Operand o3 = operands[2];
 
-        if (o1.getType() != ValuedItem.Type.NUM || o2.getType() != ValuedItem.Type.STRING)
-            throw new EvalException("Operands for EPOCHTOSTR must be Num and String");
+        if (!(o1.getType() == ValuedItem.Type.STRING || o1.getType() == ValuedItem.Type.NULL)
+                || o2.getType() != ValuedItem.Type.STRING
+                || o3.getType() != ValuedItem.Type.STRING)
+            throw new EvalException("Operands for REPLACE must be [String|Null], String and String");
 
-        long v1 = o1.coalesceToLong("Second argument for EPOCHTOSTR must be an integer") * 1000;
+        if (o1.getType() == ValuedItem.Type.NULL)
+            return o1;
+
+        assert o1.getValue() != null;
+        String v1 = (String) o1.getValue();
         assert o2.getValue() != null;
         String v2 = (String) o2.getValue();
+        assert o3.getValue() != null;
+        String v3 = (String) o3.getValue();
 
-        return Operand.strOperand(new SimpleDateFormat(v2).format(new Date(v1)));
+        return Operand.strOperand(v1.replace(v2, v3));
     }
 }

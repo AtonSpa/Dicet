@@ -2,7 +2,7 @@
 
 **Dicet** is a Java library that evaluates expressions. It's not a full-fledged programming language, but a fast way to calculate the result of an expression string, given a set of variables. It's for exaple useful to add a simple language to filter results, or to implement quick scripting in many occasions. 
 
-The string to be evaluated is something like `$a == "foo" + "bar"`; it may or may not contain a variable. There is a simple type system for variable and literals, and the variables can be supplied to the engine as a Map. In this case, the result will be a Boolean value, and the variable is typed as a String (by the `$`).
+The string to be evaluated is something like `$a == "foo" + "bar"`; it may or may not contain a variable. There is a simple type system for variable and literals, and the variables can be supplied to the engine as a Map. In the case above, the result will be a Boolean value, and the variable is typed as a String (by the `$`).
 
 Expressions can also be pre-compiled to speed up the evaluation.
 
@@ -44,4 +44,6 @@ println(result.type) // NUM
 println(result.value) // 2
 ```
 
-This is derived from a work made in my company, [Aton S.p.A](https://www.aton.com)., since 2008; copyright is therefore kept as `(c) 2008 Aton S.p.A.`, under the terms of the CDDL.
+This is derived from a work made by [Aton S.p.A](https://www.aton.com), since 2008.
+
+Copyright is `(c) 2008- [Aton S.p.A.](https://www.aton.com)`, under the terms of the CDDL.

@@ -36,11 +36,13 @@ public class Lower implements Function.Performable {
             throw new EvalException("Operands for LOWER must be 1, are " + operands.length);
         Operand o1 = operands[0];
 
-        if (o1.getType() == ValuedItem.Type.STRING)
-            return Operand.strOperand((((String) o1.getValue()).toLowerCase()));
-
         if (o1.getType() == ValuedItem.Type.NULL)
             return o1;
+
+        assert o1.getValue() != null;
+
+        if (o1.getType() == ValuedItem.Type.STRING)
+            return Operand.strOperand((((String) o1.getValue()).toLowerCase()));
 
         throw new EvalException("Operand for LOWER must be [String|Null]");
     }

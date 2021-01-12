@@ -28,7 +28,7 @@ import com.aton.proj.libs.dicet.internals.EvalException;
 import com.aton.proj.libs.dicet.internals.Function;
 import com.aton.proj.libs.dicet.internals.Operand;
 
-public class onNull implements Function.Performable {
+public class OnNull implements Function.Performable {
     @Override
     public Operand perform(Operand... operands) throws EvalException {
         if (operands.length != 2)

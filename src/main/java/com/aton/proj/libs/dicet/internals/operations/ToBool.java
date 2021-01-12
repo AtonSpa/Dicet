@@ -39,9 +39,11 @@ public class ToBool implements Function.Performable {
 
         switch (o1.getType()) {
             case STRING:
+                assert o1.getValue() != null;
                 String s1 = (String) o1.getValue();
                 return Operand.boolOperand("true".equalsIgnoreCase(s1) || "1".equalsIgnoreCase(s1));
             case NUM:
+                assert o1.getValue() != null;
                 BigDecimal bd1 = (BigDecimal) o1.getValue();
                 return Operand.boolOperand(!BigDecimal.ZERO.equals(bd1));
             case BOOL:

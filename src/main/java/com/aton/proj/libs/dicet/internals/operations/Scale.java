@@ -49,17 +49,19 @@ public class Scale implements Function.Performable {
         if (o1.getType() == ValuedItem.Type.NULL)
             return o1;
 
+        assert o1.getValue() != null;
         BigDecimal v1 = ((BigDecimal) o1.getValue());
         int v2 = o2.coalesceToInt("Second operand for SCALE must be an integer");
 
         if (v2 < 0)
             throw new EvalException("Operand 2 must be positive");
 
+        assert o3.getValue() != null;
         String v3 = (String) o3.getValue();
 
-        if (!v3.equalsIgnoreCase("FLOOR") &&
-                !v3.equalsIgnoreCase("CEIL") &&
-                !v3.equalsIgnoreCase("ROUND"))
+        if (!v3.equalsIgnoreCase("FLOOR")
+                && !v3.equalsIgnoreCase("CEIL")
+                && !v3.equalsIgnoreCase("ROUND"))
             throw new EvalException("Third operand for SCALE must be [\"FLOOR\"|\"CEIL\",|\"ROUND\"]");
 
         if (v3.equalsIgnoreCase("FLOOR"))

@@ -25,8 +25,8 @@
 package com.aton.proj.libs.dicet.internals.operations;
 
 import com.aton.proj.libs.dicet.internals.EvalException;
-import com.aton.proj.libs.dicet.internals.Operand;
 import com.aton.proj.libs.dicet.internals.Function;
+import com.aton.proj.libs.dicet.internals.Operand;
 import com.aton.proj.libs.dicet.internals.ValuedItem;
 
 public class StartsWith implements Function.Performable {
@@ -37,13 +37,16 @@ public class StartsWith implements Function.Performable {
         Operand o1 = operands[0];
         Operand o2 = operands[1];
 
-        if (!(o1.getType() == ValuedItem.Type.STRING || o1.getType() == ValuedItem.Type.NULL) || o2.getType() != ValuedItem.Type.STRING)
+        if (!(o1.getType() == ValuedItem.Type.STRING || o1.getType() == ValuedItem.Type.NULL)
+                || o2.getType() != ValuedItem.Type.STRING)
             throw new EvalException("Operands for STARTSWITH must be [String|Null] and String");
 
         if (o1.getType() == ValuedItem.Type.NULL)
             return Operand.FALSE;
 
+        assert o1.getValue() != null;
         String v1 = (String) o1.getValue();
+        assert o2.getValue() != null;
         String v2 = (String) o2.getValue();
 
         return Operand.boolOperand(v1.startsWith(v2));

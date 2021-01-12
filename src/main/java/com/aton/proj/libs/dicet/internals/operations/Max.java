@@ -39,7 +39,8 @@ public class Max implements Function.Performable {
         Operand o1 = operands[0];
         Operand o2 = operands[1];
 
-        if (o1.getType() != o2.getType() && !(o1.getType() == ValuedItem.Type.NULL || o2.getType() == ValuedItem.Type.NULL))
+        if (o1.getType() != o2.getType()
+                && !(o1.getType() == ValuedItem.Type.NULL || o2.getType() == ValuedItem.Type.NULL))
             throw new EvalException("Operands for MAX must be of the same type or NULL");
 
         if (o1.getType() == ValuedItem.Type.NULL || o2.getType() == ValuedItem.Type.NULL) {
@@ -47,6 +48,9 @@ public class Max implements Function.Performable {
                 return o2;
             return o1;
         }
+
+        assert o1.getValue() != null;
+        assert o2.getValue() != null;
 
         switch (o1.getType()) {
             case STRING: {

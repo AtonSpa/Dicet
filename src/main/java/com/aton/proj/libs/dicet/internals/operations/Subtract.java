@@ -46,6 +46,8 @@ public class Subtract implements Function.Performable {
                     case STRING:
                         throw new EvalException("Cannot SUBTRACT on strings");
                     case NUM:
+                        assert o1.getValue() != null;
+                        assert o2.getValue() != null;
                         return Operand.numOperand(((BigDecimal) o1.getValue()).subtract((BigDecimal) o2.getValue()));
                     case BOOL:
                         throw new EvalException("Cannot SUBTRACT on booleans");

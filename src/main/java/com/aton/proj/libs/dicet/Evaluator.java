@@ -369,9 +369,6 @@ public class Evaluator {
                 Operand[] operands = new Operand[opNum];
                 for (int i = opNum - 1; i >= 0; i--)
                     operands[i] = (Operand) stack.pop();
-//                System.out.println(op.action.getClass());
-//                for(Operand _op : operands)
-//                    System.out.println(">"+_op.getValue());
                 Operand res = op.action.perform(operands);
                 stack.push(res);
             }
@@ -384,10 +381,12 @@ public class Evaluator {
         return ((Operand) stack.pop());
     }
 
+    @SuppressWarnings("unused")
     public Operand evaluate(Map<String, String> variables) throws EvalException {
         return evaluateToOperand(variables);
     }
 
+    @SuppressWarnings("unused")
     public String evaluateToString(Map<String, String> variables) throws EvalException {
         Object ret = evaluate(variables).getValue();
         if (ret == null)
@@ -395,10 +394,12 @@ public class Evaluator {
         return ret.toString();
     }
 
+    @SuppressWarnings("unused")
     public Operand evaluate() throws EvalException {
         return evaluateToOperand(null);
     }
 
+    @SuppressWarnings("unused")
     public String evaluateToString() throws EvalException {
         return evaluateToString(null);
     }

@@ -29,6 +29,7 @@ import com.aton.proj.libs.dicet.internals.Function;
 import com.aton.proj.libs.dicet.internals.Operand;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class Divide implements Function.Performable {
     @Override
@@ -46,6 +47,8 @@ public class Divide implements Function.Performable {
                     case STRING:
                         throw new EvalException("Cannot DIVIDE on strings");
                     case NUM:
+                        assert o1.getValue() != null;
+                        assert o2.getValue() != null;
                         return Operand.numOperand(((BigDecimal) o1.getValue()).divide((BigDecimal) o2.getValue()));
                     case BOOL:
                         throw new EvalException("Cannot DIVIDE on booleans");

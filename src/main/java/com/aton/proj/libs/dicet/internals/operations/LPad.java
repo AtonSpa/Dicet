@@ -29,24 +29,41 @@ import com.aton.proj.libs.dicet.internals.Function;
 import com.aton.proj.libs.dicet.internals.Operand;
 import com.aton.proj.libs.dicet.internals.ValuedItem;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-public class EpochToStr implements Function.Performable {
+public class LPad implements Function.Performable {
     @Override
     public Operand perform(Operand... operands) throws EvalException {
-        if (operands.length != 2)
-            throw new EvalException("Operands for EPOCHTOSTR must be 2, are " + operands.length);
+        if (operands.length != 3)
+            throw new EvalException("Operands for LPAD must be 3, are " + operands.length);
         Operand o1 = operands[0];
         Operand o2 = operands[1];
+        Operand o3 = operands[2];
 
-        if (o1.getType() != ValuedItem.Type.NUM || o2.getType() != ValuedItem.Type.STRING)
-            throw new EvalException("Operands for EPOCHTOSTR must be Num and String");
+        if (!(o1.getType() == ValuedItem.Type.STRING || o1.getType() == ValuedItem.Type.NULL)
+                || o2.getType() != ValuedItem.Type.NUM
+                || o3.getType() != ValuedItem.Type.STRING)
+            throw new EvalException("Operands for LPAD must be [String|Null], Num and String");
 
-        long v1 = o1.coalesceToLong("Second argument for EPOCHTOSTR must be an integer") * 1000;
-        assert o2.getValue() != null;
-        String v2 = (String) o2.getValue();
+        if (o1.getType() == ValuedItem.Type.NULL)
+            return o1;
 
-        return Operand.strOperand(new SimpleDateFormat(v2).format(new Date(v1)));
+        assert o1.getValue() != null;
+        String v1 = (String) o1.getValue();
+
+        int v2 = o2.coalesceToInt("Second argument for LPAD must be an integer");
+        if (v2 < 0)
+            throw new EvalException("Second operand for LPAD must be positive");
+
+        if (v2 <= v1.length())
+            return o1;
+
+        assert o3.getValue() != null;
+        String v3 = (String) o3.getValue();
+        if (v3.length() != 1)
+            throw new EvalException("Third argument for LPAD must be a single char");
+
+        StringBuilder sb = new StringBuilder(v1);
+        while (sb.length() < v2)
+            sb.insert(0, v3);
+        return Operand.strOperand(sb.toString());
     }
 }

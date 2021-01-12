@@ -47,6 +47,8 @@ public class Remainder implements Function.Performable {
                     case STRING:
                         throw new EvalException("Cannot REMAINDER on strings");
                     case NUM: {
+                        assert o1.getValue() != null;
+                        assert o2.getValue() != null;
                         return Operand.numOperand(((BigDecimal) o1.getValue()).remainder((BigDecimal) o2.getValue()));
                     }
                     case BOOL:

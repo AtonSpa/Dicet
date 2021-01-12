@@ -39,6 +39,7 @@ public class Not implements Function.Performable {
         if (o1.getType() != ValuedItem.Type.BOOL)
             throw new EvalException("Operand for NOT must be Boolean");
 
+        assert o1.getValue() != null;
         return Operand.boolOperand(!((Boolean) o1.getValue()).booleanValue());
     }
 }

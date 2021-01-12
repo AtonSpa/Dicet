@@ -25,8 +25,8 @@
 package com.aton.proj.libs.dicet.internals.operations;
 
 import com.aton.proj.libs.dicet.internals.EvalException;
-import com.aton.proj.libs.dicet.internals.Operand;
 import com.aton.proj.libs.dicet.internals.Function;
+import com.aton.proj.libs.dicet.internals.Operand;
 
 import java.math.BigDecimal;
 
@@ -42,27 +42,35 @@ public class Add implements Function.Performable {
             case STRING:
                 switch (o2.getType()) {
                     case STRING:
+                        assert o1.getValue() != null;
+                        assert o2.getValue() != null;
                         return Operand.strOperand((String) o1.getValue() + (String) o2.getValue());
                     case NUM:
+                        assert o1.getValue() != null;
+                        assert o2.getValue() != null;
                         return Operand.strOperand((String) o1.getValue() + ((BigDecimal) o2.getValue()).toString());
                     case BOOL:
-                        throw new EvalException("Cannot ADD on booleans");
+                        throw new EvalException("Cannot ADD on BOOL");
                     case NULL:
                         return o1;
                 }
             case NUM:
                 switch (o2.getType()) {
                     case STRING:
+                        assert o1.getValue() != null;
+                        assert o2.getValue() != null;
                         return Operand.strOperand(((BigDecimal) o1.getValue()).toString() + (String) o2.getValue());
                     case NUM:
+                        assert o1.getValue() != null;
+                        assert o2.getValue() != null;
                         return Operand.numOperand(((BigDecimal) o1.getValue()).add((BigDecimal) o2.getValue()));
                     case BOOL:
-                        throw new EvalException("Cannot ADD on booleans");
+                        throw new EvalException("Cannot ADD on BOOL");
                     case NULL:
                         return o1;
                 }
             case BOOL:
-                throw new EvalException("Cannot ADD on booleans");
+                throw new EvalException("Cannot ADD on BOOL");
             case NULL:
                 return o2;
         }

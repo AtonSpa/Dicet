@@ -25,8 +25,8 @@
 package com.aton.proj.libs.dicet.internals.operations;
 
 import com.aton.proj.libs.dicet.internals.EvalException;
-import com.aton.proj.libs.dicet.internals.Operand;
 import com.aton.proj.libs.dicet.internals.Function;
+import com.aton.proj.libs.dicet.internals.Operand;
 import com.aton.proj.libs.dicet.internals.ValuedItem;
 
 import java.math.BigDecimal;
@@ -41,11 +41,11 @@ public class Multiply implements Function.Performable {
 
         switch (o1.getType()) {
             case STRING:
+                assert o1.getValue() != null;
                 if (o2.getType() == ValuedItem.Type.NUM) {
                     String v1 = (String) o1.getValue();
                     int v2 = o2.coalesceToInt("It's only possible to MULTIPLY a string with an integer");
-                    final StringBuilder sb = new StringBuilder();
-                    return Operand.strOperand(((String) o1.getValue()).repeat(Math.max(0, v2)));
+                    return Operand.strOperand(v1.repeat(Math.max(0, v2)));
                 } else
                     throw new EvalException("It's only possible to MULTIPLY a string with an integer");
             case NUM:
@@ -53,6 +53,8 @@ public class Multiply implements Function.Performable {
                     case STRING:
                         throw new EvalException("Cannot MULTIPLY on strings");
                     case NUM:
+                        assert o1.getValue() != null;
+                        assert o2.getValue() != null;
                         return Operand.numOperand(((BigDecimal) o1.getValue()).multiply((BigDecimal) o2.getValue()));
                     case BOOL:
                         throw new EvalException("Cannot MULTIPLY on booleans");

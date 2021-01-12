@@ -27,6 +27,7 @@ package com.aton.proj.libs.dicet.internals.operations;
 import com.aton.proj.libs.dicet.internals.EvalException;
 import com.aton.proj.libs.dicet.internals.Function;
 import com.aton.proj.libs.dicet.internals.Operand;
+import com.aton.proj.libs.dicet.internals.ValuedItem;
 
 import java.math.BigDecimal;
 
@@ -37,17 +38,14 @@ public class Signum implements Function.Performable {
             throw new EvalException("Operands for SIGNUM must be 1, are " + operands.length);
         Operand o1 = operands[0];
 
-        switch (o1.getType()) {
-            case STRING:
-                throw new EvalException("Cannot SIGNUM on strings");
-            case NUM:
-                return Operand.numOperand(new BigDecimal((((BigDecimal) o1.getValue()).signum())));
-            case BOOL:
-                throw new EvalException("Cannot SIGNUM on booleans");
-            case NULL:
-                throw new EvalException("Cannot SIGNUM on nulls");
-        }
+        if (o1.getType() == ValuedItem.Type.NULL)
+            return o1;
 
-        throw new EvalException("Invalid parameters combination for ADD");
+        assert o1.getValue() != null;
+
+        if (o1.getType() == ValuedItem.Type.NUM)
+            return Operand.numOperand(new BigDecimal((((BigDecimal) o1.getValue()).signum())));
+
+        throw new EvalException("Operand for SIGNUM must be [Num|Null]");
     }
 }

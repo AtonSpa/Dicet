@@ -39,11 +39,13 @@ public class ToNum implements Function.Performable {
 
         switch (o1.getType()) {
             case STRING:
+                assert o1.getValue() != null;
                 String s1 = (String) o1.getValue();
                 return Operand.numOperand(new BigDecimal(s1));
             case NUM:
                 return o1;
             case BOOL:
+                assert o1.getValue() != null;
                 Boolean b1 = (Boolean) o1.getValue();
                 return b1.booleanValue() ? Operand.numOperand(BigDecimal.ONE) : Operand.numOperand(BigDecimal.ZERO);
             case NULL:

@@ -44,6 +44,9 @@ public class Abs implements Function.Performable {
         if (o1.getType() == ValuedItem.Type.NULL)
             return o1;
 
-        return Operand.numOperand(((BigDecimal) o1.getValue()).abs());
+        assert o1.getValue() != null;
+
+        BigDecimal v1 = (BigDecimal) o1.getValue();
+        return Operand.numOperand(v1.abs());
     }
 }

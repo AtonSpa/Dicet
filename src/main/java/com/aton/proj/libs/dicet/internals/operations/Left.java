@@ -37,13 +37,18 @@ public class Left implements Function.Performable {
         Operand o1 = operands[0];
         Operand o2 = operands[1];
 
-        if (!(o1.getType() == ValuedItem.Type.STRING || o1.getType() == ValuedItem.Type.NULL) || o2.getType() != ValuedItem.Type.NUM)
+        if (!(o1.getType() == ValuedItem.Type.STRING || o1.getType() == ValuedItem.Type.NULL)
+                || o2.getType() != ValuedItem.Type.NUM)
             throw new EvalException("Operands for LEFT must be [String|Null] and Num");
 
+        if (o1.getType() == ValuedItem.Type.NULL)
+            return o1;
+
+        assert o1.getValue() != null;
         String v1 = (String) o1.getValue();
         int v2 = o2.coalesceToInt("Second argument for LEFT must be an integer");
 
-        if (o1.getType() == ValuedItem.Type.NULL || v2 >= v1.length())
+        if (v2 >= v1.length())
             return o1;
 
         return Operand.strOperand(v1.substring(0, v2));

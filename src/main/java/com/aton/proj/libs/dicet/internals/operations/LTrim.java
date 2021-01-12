@@ -29,24 +29,28 @@ import com.aton.proj.libs.dicet.internals.Function;
 import com.aton.proj.libs.dicet.internals.Operand;
 import com.aton.proj.libs.dicet.internals.ValuedItem;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.regex.Pattern;
 
-public class EpochToStr implements Function.Performable {
+public class LTrim implements Function.Performable {
+    private static final Pattern LTRIM = Pattern.compile("^\\s+");
+
     @Override
     public Operand perform(Operand... operands) throws EvalException {
-        if (operands.length != 2)
-            throw new EvalException("Operands for EPOCHTOSTR must be 2, are " + operands.length);
+        if (operands.length != 1)
+            throw new EvalException("Operands for LTRIM must be 1, are " + operands.length);
         Operand o1 = operands[0];
-        Operand o2 = operands[1];
 
-        if (o1.getType() != ValuedItem.Type.NUM || o2.getType() != ValuedItem.Type.STRING)
-            throw new EvalException("Operands for EPOCHTOSTR must be Num and String");
+        if (o1.getType() == ValuedItem.Type.NULL)
+            return o1;
 
-        long v1 = o1.coalesceToLong("Second argument for EPOCHTOSTR must be an integer") * 1000;
-        assert o2.getValue() != null;
-        String v2 = (String) o2.getValue();
+        assert o1.getValue() != null;
 
-        return Operand.strOperand(new SimpleDateFormat(v2).format(new Date(v1)));
+        if (o1.getType() == ValuedItem.Type.STRING) {
+            String before = (String) o1.getValue();
+            String after = LTRIM.matcher(before).replaceAll("");
+            return Operand.strOperand(after);
+        }
+
+        throw new EvalException("Operand for LTRIM must be [String|Null]");
     }
 }

@@ -25,8 +25,8 @@
 package com.aton.proj.libs.dicet.internals.operations;
 
 import com.aton.proj.libs.dicet.internals.EvalException;
-import com.aton.proj.libs.dicet.internals.Operand;
 import com.aton.proj.libs.dicet.internals.Function;
+import com.aton.proj.libs.dicet.internals.Operand;
 import com.aton.proj.libs.dicet.internals.ValuedItem;
 
 public class Upper implements Function.Performable {
@@ -36,8 +36,10 @@ public class Upper implements Function.Performable {
             throw new EvalException("Operands for UPPER must be 1, are " + operands.length);
         Operand o1 = operands[0];
 
-        if (o1.getType() == ValuedItem.Type.STRING)
+        if (o1.getType() == ValuedItem.Type.STRING) {
+            assert o1.getValue() != null;
             return Operand.strOperand((((String) o1.getValue()).toUpperCase()));
+        }
 
         if (o1.getType() == ValuedItem.Type.NULL)
             return o1;

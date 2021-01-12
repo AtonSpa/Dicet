@@ -25,8 +25,8 @@
 package com.aton.proj.libs.dicet.internals.operations;
 
 import com.aton.proj.libs.dicet.internals.EvalException;
-import com.aton.proj.libs.dicet.internals.Operand;
 import com.aton.proj.libs.dicet.internals.Function;
+import com.aton.proj.libs.dicet.internals.Operand;
 import com.aton.proj.libs.dicet.internals.ValuedItem;
 
 public class Substr implements Function.Performable {
@@ -38,22 +38,27 @@ public class Substr implements Function.Performable {
         Operand o2 = operands[1];
         Operand o3 = operands[2];
 
-        if (!(o1.getType() == ValuedItem.Type.STRING || o1.getType() == ValuedItem.Type.NULL) || o2.getType() != ValuedItem.Type.NUM || o3.getType() != ValuedItem.Type.NUM)
+        if (!(o1.getType() == ValuedItem.Type.STRING || o1.getType() == ValuedItem.Type.NULL)
+                || o2.getType() != ValuedItem.Type.NUM
+                || o3.getType() != ValuedItem.Type.NUM)
             throw new EvalException("Operands for SUBSTR must be [String|Null], Num and Num");
-
-        String v1 = (String) o1.getValue();
-        int v2 = o2.coalesceToInt("Second argument for SUBSTR must be an integer");
-        int v3 = o3.coalesceToInt("Third argument for SUBSTR must be an integer");
 
         if (o1.getType() == ValuedItem.Type.NULL)
             return o1;
 
+        assert o1.getValue() != null;
+        String v1 = (String) o1.getValue();
+
+        int v2 = o2.coalesceToInt("Second argument for SUBSTR must be an integer");
         if (v2 < 0)
-            throw new EvalException("First operand for SUBSTR must be positive");
-        if (v3 < v2)
-            throw new EvalException("Second operand for SUBSTR must be greater than first");
+            throw new EvalException("Second operand for SUBSTR must be positive");
         v2 = Math.min(v2, v1.length());
+
+        int v3 = o3.coalesceToInt("Third argument for SUBSTR must be an integer");
+        if (v3 < v2)
+            throw new EvalException("Third operand for SUBSTR must be greater than second");
         v3 = Math.min(v3, v1.length());
+
         return Operand.strOperand(v1.substring(v2, v3));
     }
 }

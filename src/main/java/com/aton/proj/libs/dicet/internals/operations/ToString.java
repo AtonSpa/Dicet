@@ -41,9 +41,11 @@ public class ToString implements Function.Performable {
             case STRING:
                 return o1;
             case NUM:
+                assert o1.getValue() != null;
                 BigDecimal bd1 = (BigDecimal) o1.getValue();
                 return Operand.strOperand(bd1.toString());
             case BOOL:
+                assert o1.getValue() != null;
                 Boolean b1 = (Boolean) o1.getValue();
                 return Operand.strOperand(b1.toString());
             case NULL:

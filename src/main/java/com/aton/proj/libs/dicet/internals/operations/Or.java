@@ -40,7 +40,9 @@ public class Or implements Function.Performable {
         if (o1.getType() != ValuedItem.Type.BOOL || o2.getType() != ValuedItem.Type.BOOL)
             throw new EvalException("Operands for OR must be Boolean");
 
+        assert o1.getValue() != null;
         boolean v1 = ((Boolean) o1.getValue()).booleanValue();
+        assert o2.getValue() != null;
         boolean v2 = ((Boolean) o2.getValue()).booleanValue();
 
         return Operand.boolOperand(v1 || v2);

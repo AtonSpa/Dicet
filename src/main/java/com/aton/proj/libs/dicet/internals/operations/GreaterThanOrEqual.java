@@ -39,13 +39,17 @@ public class GreaterThanOrEqual implements Function.Performable {
         Operand o1 = operands[0];
         Operand o2 = operands[1];
 
-        if (o1.getType() != o2.getType() && (o1.getType() == ValuedItem.Type.NULL || o2.getType() == ValuedItem.Type.NULL))
+        if (o1.getType() != o2.getType()
+                && (o1.getType() == ValuedItem.Type.NULL || o2.getType() == ValuedItem.Type.NULL))
             throw new EvalException("Operands for GREATER_EQ must be of the same type or NULL");
 
         if (o2.getType() == ValuedItem.Type.NULL)
             return Operand.TRUE;
         if (o1.getType() == ValuedItem.Type.NULL)
             return Operand.FALSE;
+
+        assert o1.getValue() != null;
+        assert o2.getValue() != null;
 
         switch (o1.getType()) {
             case STRING: {

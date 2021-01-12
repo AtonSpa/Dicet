@@ -25,8 +25,8 @@
 package com.aton.proj.libs.dicet.internals.operations;
 
 import com.aton.proj.libs.dicet.internals.EvalException;
-import com.aton.proj.libs.dicet.internals.Operand;
 import com.aton.proj.libs.dicet.internals.Function;
+import com.aton.proj.libs.dicet.internals.Operand;
 import com.aton.proj.libs.dicet.internals.ValuedItem;
 
 import java.math.BigDecimal;
@@ -45,7 +45,9 @@ public class Rand implements Function.Performable {
         if (o1.getType() != ValuedItem.Type.NUM || o2.getType() != ValuedItem.Type.NUM)
             throw new EvalException("Operands for RAND must be Num");
 
+        assert o1.getValue() != null;
         double v1 = ((BigDecimal) o1.getValue()).doubleValue();
+        assert o2.getValue() != null;
         double v2 = ((BigDecimal) o2.getValue()).doubleValue();
 
         if (Double.compare(v1, v2) >= 0)

@@ -31,7 +31,7 @@ public enum Function implements Item {
     TO_BOOL("toBool", Type.UNARY_PREFIX, 3, Associativity.LEFT, new ToBool()),
     TO_NUM("toNum", Type.UNARY_PREFIX, 3, Associativity.LEFT, new ToNum()),
     TO_STR("toString", Type.UNARY_PREFIX, 3, Associativity.LEFT, new ToString()),
-    ONNULL("onNull", Type.BINARY, 3, Associativity.LEFT, new onNull()),
+    ONNULL("onNull", Type.BINARY, 3, Associativity.LEFT, new OnNull()),
     IF("if", Type.TERNARY, 3, Associativity.LEFT, new If()),
     ADD("+", Type.BINARY, 6, Associativity.LEFT, new Add()),
     SUBTRACT("-", Type.BINARY, 6, Associativity.LEFT, new Subtract()),
@@ -49,15 +49,22 @@ public enum Function implements Item {
     RANDF("rand", Type.BINARY, 3, Associativity.LEFT, new Rand()),
     SIGNUM("signum", Type.UNARY_PREFIX, 3, null, new Signum()),
     LENGTH("len", Type.UNARY_PREFIX, 3, null, new Length()),
+    EQUALSIGNORECASE("equalsIgnCase", Type.BINARY, 3, null, new EqualsIgnCase()),
     SUBSTR("substr", Type.TERNARY, 3, null, new Substr()),
+    REPLACE("replace", Type.TERNARY, 3, null, new Replace()),
+    LPAD("lPad", Type.TERNARY, 3, null, new LPad()),
+    RPAD("rPad", Type.TERNARY, 3, null, new RPad()),
     LEFT("left", Type.BINARY, 3, null, new Left()),
     RIGHT("right", Type.BINARY, 3, null, new Right()),
     TRIM("trim", Type.UNARY_PREFIX, 3, null, new Trim()),
+    LTRIM("lTrim", Type.UNARY_PREFIX, 3, null, new LTrim()),
+    RTRIM("rTrim", Type.UNARY_PREFIX, 3, null, new RTrim()),
     UPPER("upper", Type.UNARY_PREFIX, 3, null, new Upper()),
     LOWER("lower", Type.UNARY_PREFIX, 3, null, new Lower()),
     STARTSWITH("startsWith", Type.BINARY, 3, null, new StartsWith()),
     ENDSWITH("endsWith", Type.BINARY, 3, null, new EndsWith()),
     CONTAINS("contains", Type.BINARY, 3, null, new Contains()),
+    INDEXOF("indexOf", Type.BINARY, 3, null, new IndexOf()),
     EPOCH("getEpoch", Type.ZERARY, 3, null, new Epoch()),
     STRTOEPOCH("strToEpoch", Type.BINARY, 3, null, new StrToEpoch()),
     EPOCHTOSTR("epochToStr", Type.BINARY, 3, null, new EpochToStr()),
@@ -85,12 +92,13 @@ public enum Function implements Item {
         }
     }
 
+    @SuppressWarnings("unused")
     public enum Associativity {
-        LEFT, RIGHT;
+        LEFT, RIGHT
     }
 
     public interface Performable {
-        public Operand perform(Operand... operands) throws EvalException;
+        Operand perform(Operand... operands) throws EvalException;
     }
 
     public final String literal;
@@ -99,8 +107,8 @@ public enum Function implements Item {
     public final Associativity associativity;
     public final Performable action;
 
-    private Function(String literal, Type type, int priority,
-                     Associativity associativity, Performable action) {
+    Function(String literal, Type type, int priority,
+             Associativity associativity, Performable action) {
         this.literal = literal;
         this.type = type;
         this.priority = priority;

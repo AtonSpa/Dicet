@@ -39,13 +39,15 @@ public class Power implements Function.Performable {
         Operand o1 = operands[0];
         Operand o2 = operands[1];
 
-        if (!(o1.getType() == ValuedItem.Type.NUM || o1.getType() == ValuedItem.Type.NULL) || o2.getType() != ValuedItem.Type.NUM)
+        if (!(o1.getType() == ValuedItem.Type.NUM || o1.getType() == ValuedItem.Type.NULL)
+                || o2.getType() != ValuedItem.Type.NUM)
             throw new EvalException("Operands for POWER must be [Num|Null] and Num");
 
         if (o1.getType() == ValuedItem.Type.NULL)
             return o1;
 
         int v2 = o2.coalesceToInt("Second argument for POWER must be an integer");
+        assert o1.getValue() != null;
         return Operand.numOperand(((BigDecimal) o1.getValue()).pow(v2));
     }
 }
