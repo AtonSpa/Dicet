@@ -1,4 +1,4 @@
-# .onEval 0.1.0
+# .onEval 0.2.0
 
 **.onEval** is a Java library that evaluates expressions. It's not a full-fledged programming language, but a fast way to calculate the result of an expression string, given a set of variables. It's for exaple useful to add a simple language to filter results, or to implement quick scripting in many occasions. 
 

@@ -6,7 +6,7 @@ sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
 
 group 'com.aton.proj.libs.oneval'
-version '0.1.0'
+version '0.2.0'
 
 repositories {
     mavenCentral()
