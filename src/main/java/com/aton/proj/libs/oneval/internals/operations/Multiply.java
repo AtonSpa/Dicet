@@ -45,7 +45,11 @@ public class Multiply implements Function.Performable {
                 if (o2.getType() == ValuedItem.Type.NUM) {
                     String v1 = (String) o1.getValue();
                     int v2 = o2.coalesceToInt("It's only possible to MULTIPLY a string with an integer");
-                    return Operand.strOperand(v1.repeat(Math.max(0, v2)));
+                    v2 = Math.max(0, v2);
+                    StringBuilder out = new StringBuilder();
+                    for (int i = 0; i < v2; i++)
+                        out.append(v1);
+                    return Operand.strOperand(out.toString());
                 } else
                     throw new EvalException("It's only possible to MULTIPLY a string with an integer");
             case NUM:
