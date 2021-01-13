@@ -1,6 +1,6 @@
-import com.aton.proj.libs.dicet.Evaluator;
-import com.aton.proj.libs.dicet.internals.EvalException;
-import com.aton.proj.libs.dicet.internals.Operand;
+import com.aton.proj.libs.oneval.Evaluator;
+import com.aton.proj.libs.oneval.internals.EvalException;
+import com.aton.proj.libs.oneval.internals.Operand;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -251,6 +251,27 @@ public class TestEvaluator {
         testTruth("onNull(1, \"1\") == 1");
         testTruth("if(true, 'a', 'b') == 'a'");
         testTruth("if(false, '1', 1) == 1");
+        testTruth("rTrim(\" haystack \") == \" haystack\"");
+        testTruth("rTrim(NULL) == NULL");
+        testTruth("rPad(\"hello\", 8, 'o') == \"helloooo\"");
+        testTruth("rPad(\"hello\", 4, 'o') == \"hello\"");
+        testTruth("rPad(NULL, 8, 'o') == NULL");
+        testTruth("replace(\"haystack\", \"ay\", \"en\") == \"henstack\"");
+        testTruth("replace(\"haystack\", \"a\", \"e\") == \"heysteck\"");
+        testTruth("replace(\"haystack\", \"u\", \"i\") == \"haystack\"");
+        testTruth("replace(NULL, \"ay\", \"en\") == NULL");
+        testTruth("lTrim(\" haystack \") == \"haystack \"");
+        testTruth("lTrim(NULL) == NULL");
+        testTruth("lPad(\"hello\", 8, 'h') == \"hhhhello\"");
+        testTruth("lPad(\"hello\", 4, 'h') == \"hello\"");
+        testTruth("lPad(NULL, 8, 'h') == NULL");
+        testTruth("indexOf(\"haystack\", \"needle\") == -1");
+        testTruth("indexOf(\"haystack\", \"sta\") == 3");
+        testTruth("indexOf(NULL, \"any\") == -1");
+        testTruth("equalsIgnCase(\"haystack\", \"HAYSTACK\") == true");
+        testTruth("equalsIgnCase(\"haystack\", \"HAYSACK\") == false");
+        testTruth("equalsIgnCase(\"haystack\", NULL) == false");
+        testTruth("equalsIgnCase(NULL, NULL) == true");
     }
 
     @Test

@@ -2,8 +2,11 @@ plugins {
     id 'java'
 }
 
-group 'com.aton.proj.libs.dicet'
-version '0.1.0'
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+group 'com.aton.proj.libs.oneval'
+version '0.2.0'
 
 repositories {
     mavenCentral()
