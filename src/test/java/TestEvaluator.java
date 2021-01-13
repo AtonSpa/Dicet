@@ -1,6 +1,6 @@
-import com.aton.proj.libs.dicet.Evaluator;
-import com.aton.proj.libs.dicet.internals.EvalException;
-import com.aton.proj.libs.dicet.internals.Operand;
+import com.aton.proj.libs.oneval.Evaluator;
+import com.aton.proj.libs.oneval.internals.EvalException;
+import com.aton.proj.libs.oneval.internals.Operand;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
