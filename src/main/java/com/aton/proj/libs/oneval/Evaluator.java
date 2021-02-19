@@ -174,7 +174,7 @@ public class Evaluator {
         insideLiteral = false;
         for (int i = 0; i < expression.length(); i++) {
             char c = expression.charAt(i);
-            if (!insideLiteral && (c == '$')) {
+            if (!insideLiteral && (c == '$' || c == '%' || c == '?')) {
                 insideLiteral = true;
                 str = new StringBuilder();
             } else if (insideLiteral && (!isAllowedForVarName(c)
@@ -211,9 +211,10 @@ public class Evaluator {
             expression = expression.replace(op.literal, " " + op.literal + " ");
 
         //replace back the variables
-        for (int i = 0; i < varLiterals.size(); i++)
-            expression = expression.replace(VARIABLE_PLACEHOLDER + i,
-                    varLiterals.get(i));
+        for (int i = 0; i < varLiterals.size(); i++) {
+            expression = expression.replace(VARIABLE_PLACEHOLDER + i + ' ',
+                    varLiterals.get(i) + ' ');
+        }
 
         StringTokenizer st = new StringTokenizer(expression, " ");
         List<String> tokenized = new ArrayList<>();

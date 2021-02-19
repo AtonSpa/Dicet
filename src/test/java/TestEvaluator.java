@@ -275,6 +275,17 @@ public class TestEvaluator {
     }
 
     @Test
+    public void testUpstreamBugs() throws ParseException, EvalException {
+        testTruth("11111111111111111111111111111111111111111111 != 11111111111111111111111111111111111111111112");
+        testTruth("11111111111111111111111111111111111111111111 == 11111111111111111111111111111111111111111111");
+        testTruth("'11111111111111111111111111111111111111111111' != '11111111111111111111111111111111111111111112'");
+        testTruth("'11111111111111111111111111111111111111111111' == '11111111111111111111111111111111111111111111'");
+
+        testTruth("$f == $NULL && %a != $NULL && %b != 0 && %c != 0 && $d != NULL && %g != 0 && " +
+                "$h != NULL && $i != NULL && $j != NULL && $k != NULL && $l != NULL && %m != 0");
+    }
+
+    @Test
     public void testWrongNumOfOperands() {
         testFailCompilation("(5*2)8");
     }
